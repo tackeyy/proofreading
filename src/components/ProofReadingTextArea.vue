@@ -4,27 +4,36 @@
       <textarea v-model="input"></textarea>
     </div>
     <div id="result" class="mdl-cell mdl-cell--6-col">
-      <div v-html="compiledMarkdown"></div>
+      <div v-html="proofedText"></div>
     </div>
   </div>
 </template>
 
 <script>
+
+const URL = 'https://api.a3rt.recruit-tech.co.jp/proofreading/v1/typo'
 export default {
   name: 'Sample',
 
   data () {
     return {
-      input: '# hello'
+      input: ''
     }
   },
   computed: {
-    compiledMarkdown () {
-      return '<h1>' + this.input + '</h1>'
+    proofedText () {
+      return this.hoge()
     }
   },
   methods: {
-
+    hoge () {
+      this.$http.get(URL).then(response => {
+        return '成功'
+      }, response => {
+        console.info(response.status)
+        return response.status
+      })
+    }
   }
 }
 </script>
